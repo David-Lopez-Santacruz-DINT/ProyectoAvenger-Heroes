@@ -14,6 +14,8 @@
     Icon="shield.ico">
 
     <Window.Resources>
+        
+        <!-- **********************Estilos********************************* -->
 
         <Style TargetType="RowDefinition" x:Key="alturaAuto">
             <Setter Property="Height" Value="auto"/>
@@ -47,18 +49,27 @@
             <Setter Property="Width" Value="90"/>
             <Setter Property="Margin" Value="10,20,0,0"/>
         </Style>
+        
+        <!-- *******************************Convertidores de enlaces *************************************-->
+
+        <local:MostrarIconosHeroes x:Key="iconos"></local:MostrarIconosHeroes>
+        <local:CambioColorFondo x:Key="fondoColor"></local:CambioColorFondo>
+        <local:Superheroe x:Key="marvelComics"></local:Superheroe>
+
     </Window.Resources>
     
     <Grid>
         <TabControl Margin="10">
-            <TabItem
-                Header="Ver Superhéroes">
+            <TabItem Header="Ver Superhéroes">
 
                 <DockPanel
-                    LastChildFill="True">
+                    x:Name="fondoDockPanel"
+                    DataContext="{StaticResource marvelComics}"
+                    LastChildFill="True"
+                    Background="{Binding Path=Heroe, Converter={StaticResource fondoColor}}">
 
-                    <Grid
-                        DockPanel.Dock="Top">
+
+                    <Grid DockPanel.Dock="Top">
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
                         </Grid.RowDefinitions>
@@ -91,12 +102,14 @@
                             <Image
                                 x:Name="logoAvenImage"
                                 Source="avengers.png"
-                                Width="30"/>
+                                Width="30"
+                                Visibility="{Binding Path=Vengador, Converter={StaticResource iconos}}"/>
 
                             <Image
                                 x:Name="logoXmenImage"
                                 Source="xmen.png"
-                                Width="45"/>
+                                Width="45"
+                                Visibility="{Binding Path=Xmen, Converter={StaticResource iconos}}"/>
 
                         </StackPanel>
                     </Grid>
@@ -143,18 +156,12 @@
 
                     </StackPanel>
 
-
-                    <Border
-                         x:Name="fondoColorBorder">
-                        <Grid>
+                    <Grid>
                         <Image 
                             x:Name="fondoImage"
                             Source="{Binding Path=Imagen}"/>
-                        </Grid>
-                    </Border>
-
-
-
+                    </Grid>
+                    
                 </DockPanel>
 
             </TabItem>
@@ -164,7 +171,11 @@
                 
                 <!-- ====================== SEGUNDA PESTAÑA ===================================-->
 
-                <DockPanel LastChildFill="True">
+                <DockPanel 
+                    x:Name="segundaPestañaDockPanel" 
+                    LastChildFill="True"
+                    KeyUp="segundaPestañaDockPanel_KeyUp">
+                    
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition></RowDefinition>
@@ -258,7 +269,8 @@
                                     <RadioButton 
                                         x:Name="villanoRadioButton"
                                         Content="Villano"
-                                        Checked="villanoRadioButton_Checked"/>
+                                        Checked="villanoRadioButton_Checked"
+                                        Unchecked="villanoRadioButton_Unchecked"/>
 
                                 </StackPanel>
                                 <Border.Effect>

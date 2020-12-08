@@ -58,6 +58,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Convertidores.cs" />
     <Compile Include="IStructuralEquatable.cs" />
     <Compile Include="Superheroe.cs" />
     <Page Include="MainWindow.xaml">
